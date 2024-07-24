@@ -2,10 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const csv = require("csv-parser");
+const cors = require("cors");
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
+app.use(cors()); // Enable CORS
 
 let words = [];
 let usedWordIds = new Set();
@@ -66,7 +68,7 @@ app.get("/random", (req, res) => {
 app.post("/post", (req, res) => {
   const { word } = req.body;
   const foundWord = words.find(
-    (w) => w.word.toLowerCase() === word.toLowerCase(),
+    (w) => w.word.toLowerCase() === word.toLowerCase()
   );
   if (foundWord) {
     res.json(foundWord);
